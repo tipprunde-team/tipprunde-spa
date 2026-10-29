@@ -1,0 +1,28 @@
+<h1>Meine Tippgruppen</h1>
+
+@if (loading()) {
+  <p class="muted">Tippgruppen werden geladen …</p>
+} @else if (error()) {
+  <div class="alert" role="alert">{{ error() }}</div>
+} @else if (groups().length === 0) {
+  <section class="card">
+    <p>Du bist noch in keiner Tippgruppe.</p>
+    <p class="muted">Lass dir einen Einladungslink schicken, um einer Gruppe beizutreten.</p>
+  </section>
+} @else {
+  <ul class="group-list">
+    @for (group of groups(); track group.id) {
+      <li>
+        <a class="card group-card" [routerLink]="['/groups', group.id, 'matchday']">
+          <span class="group-name">{{ group.name }}</span>
+          <span class="badge">{{ group.role === 'ADMIN' ? 'Admin' : 'Mitglied' }}</span>
+          <span class="muted">{{ group.memberCount }} {{ group.memberCount === 1 ? 'Mitglied' : 'Mitglieder' }}</span>
+          <span class="group-stats">
+            <span><strong>{{ group.myRank }}.</strong> Platz</span>
+            <span><strong>{{ group.myPoints }}</strong> Punkte</span>
+          </span>
+        </a>
+      </li>
+    }
+  </ul>
+}
