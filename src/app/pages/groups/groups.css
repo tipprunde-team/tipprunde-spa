@@ -43,3 +43,20 @@
   display: flex;
   gap: var(--space-5);
 }
+
+.actions {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Abstand zwischen nebeneinanderliegenden Karten regelt das Grid */
+.actions .card + .card {
+  margin-top: 0;
+}

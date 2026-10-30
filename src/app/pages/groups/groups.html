@@ -6,8 +6,7 @@
   <div class="alert" role="alert">{{ error() }}</div>
 } @else if (groups().length === 0) {
   <section class="card">
-    <p>Du bist noch in keiner Tippgruppe.</p>
-    <p class="muted">Lass dir einen Einladungslink schicken, um einer Gruppe beizutreten.</p>
+    <p>Du bist noch in keiner Tippgruppe. Erstelle eine oder tritt mit einem Einladungscode bei.</p>
   </section>
 } @else {
   <ul class="group-list">
@@ -26,3 +25,32 @@
     }
   </ul>
 }
+
+<div class="actions">
+  <section class="card">
+    <h2>Gruppe erstellen</h2>
+    @if (createError()) {
+      <div class="alert" role="alert">{{ createError() }}</div>
+    }
+    <form (ngSubmit)="create()">
+      <div class="form-group">
+        <label class="label" for="group-name">Name der Tippgruppe</label>
+        <input id="group-name" class="input" name="name" maxlength="50" [ngModel]="newName()" (ngModelChange)="newName.set($event)" />
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" [disabled]="creating()">
+        {{ creating() ? 'Wird erstellt …' : 'Gruppe erstellen' }}
+      </button>
+    </form>
+  </section>
+
+  <section class="card">
+    <h2>Gruppe beitreten</h2>
+    <form (ngSubmit)="join()">
+      <div class="form-group">
+        <label class="label" for="join-code">Einladungscode</label>
+        <input id="join-code" class="input" name="code" autocomplete="off" [ngModel]="joinCode()" (ngModelChange)="joinCode.set($event)" />
+      </div>
+      <button type="submit" class="btn btn-secondary btn-block">Weiter</button>
+    </form>
+  </section>
+</div>
