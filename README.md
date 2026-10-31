@@ -13,6 +13,7 @@ Die SPA spricht ausschließlich mit dem GraphQL-Service (`tipprunde-graphql`), d
 | `/join/:code` | Einladungsvorschau und Beitritt | Vorschau nein, Beitritt ja |
 | `/groups/:id/matchday` | Spieltag mit Tippen | ja |
 | `/groups/:id/ranking` | Rangliste | ja |
+| `/groups/:id/info` | Gruppe mit Mitgliedern und Einladungslink | ja |
 
 Alle Ansichten werden erst beim Aufruf geladen; beim Wechsel lädt die Seite nie neu.
 
@@ -31,7 +32,7 @@ public/                  Logo, Favicon, Schriften (lokal, ohne Google Fonts)
 
 ## Lokal starten (Windows)
 
-Voraussetzung: Node.js LTS. Core-Service (Port 8080) und GraphQL-Service (Port 8081) laufen lokal.
+Voraussetzung: Node.js 24 (LTS). Core-Service (Port 8080) und GraphQL-Service (Port 8081) laufen lokal.
 
 ```
 npm install
@@ -39,6 +40,28 @@ npx ng serve
 ```
 
 Danach http://localhost:4200 öffnen. Die SPA nutzt lokal automatisch `http://localhost:8081/graphql`.
+
+### Wie live testen
+
+```
+npm run build
+node server.js
+```
+
+Danach http://localhost:4000 öffnen. `server.js` liefert den Produktions-Build aus, genau wie auf Heroku
+(dabei gilt die Live-GraphQL-URL aus `environment.ts`).
+
+## Deployment (Heroku)
+
+| Datei | Zweck |
+|---|---|
+| `server.js` | Express liefert `dist/tipprunde-spa/browser` aus; unbekannte Pfade bekommen `index.html`, damit Links wie `/join/ABC123` direkt funktionieren |
+| `Procfile` | `web: node server.js` |
+| `package.json` | `engines` legt Node 24 fest, `express` steht unter `dependencies` |
+
+Heroku installiert die Pakete, führt `npm run build` aus und startet danach das Procfile. Automatic Deploys von `main`
+mit „Wait for CI to pass“, wie beim Core-Service. Die Live-URL des GraphQL-Service steht in
+`src/environments/environment.ts`; der GraphQL-Service muss die SPA-URL in seinen erlaubten CORS-Origins haben.
 
 ## Anmeldung
 
