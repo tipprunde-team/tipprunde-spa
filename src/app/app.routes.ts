@@ -34,6 +34,12 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/ranking/ranking').then((m) => m.RankingPage),
   },
   {
+    path: 'groups/:id/info',
+    title: 'Gruppe – Tipprunde',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/group-info/group-info').then((m) => m.GroupInfoPage),
+  },
+  {
     path: '**',
     title: 'Seite nicht gefunden – Tipprunde',
     loadComponent: () => import('./pages/not-found/not-found').then((m) => m.NotFoundPage),

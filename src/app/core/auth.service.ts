@@ -11,9 +11,11 @@ const KEY_USERNAME = 'tipprunde.spa.username';
 export class AuthService {
   private readonly token = signal<string | null>(this.readValidToken());
   private readonly name = signal<string | null>(sessionStorage.getItem(KEY_USERNAME));
+  private readonly id = signal<string | null>(sessionStorage.getItem(KEY_USER_ID));
 
   readonly isLoggedIn = computed(() => this.token() !== null);
   readonly username = this.name.asReadonly();
+  readonly userId = this.id.asReadonly();
 
   // Token für den Interceptor, abgelaufene Tokens zählen nicht
   getToken(): string | null {
@@ -30,12 +32,14 @@ export class AuthService {
     sessionStorage.setItem(KEY_USERNAME, answer.user.username);
     this.token.set(answer.token);
     this.name.set(answer.user.username);
+    this.id.set(answer.user.id);
   }
 
   clearSession(): void {
     [KEY_TOKEN, KEY_EXPIRES, KEY_USER_ID, KEY_USERNAME].forEach((key) => sessionStorage.removeItem(key));
     this.token.set(null);
     this.name.set(null);
+    this.id.set(null);
   }
 
   private readValidToken(): string | null {
