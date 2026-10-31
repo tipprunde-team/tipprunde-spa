@@ -1,0 +1,34 @@
+<app-group-tabs [groupId]="id()" />
+
+<h1>Rangliste</h1>
+
+@if (loading()) {
+  <p class="muted">Rangliste wird geladen …</p>
+} @else if (error()) {
+  <div class="alert" role="alert">{{ error() }}</div>
+} @else if (entries().length === 0) {
+  <section class="card"><p class="muted">Noch keine Punkte vergeben.</p></section>
+} @else {
+  <div class="card ranking-wrap">
+    <table class="ranking">
+      <thead>
+        <tr>
+          <th scope="col">Platz</th>
+          <th scope="col">Name</th>
+          <th scope="col" class="num">Punkte</th>
+          <th scope="col" class="num">Exakt</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (entry of entries(); track entry.userId) {
+          <tr [class.me]="entry.userId === auth.userId()">
+            <td>{{ entry.rank }}.</td>
+            <td class="name">{{ entry.username }}</td>
+            <td class="num"><strong>{{ entry.points }}</strong></td>
+            <td class="num">{{ entry.exactTips }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
