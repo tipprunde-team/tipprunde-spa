@@ -9,6 +9,7 @@ Die SPA spricht ausschließlich mit dem GraphQL-Service (`tipprunde-graphql`), d
 | Route | Ansicht | Anmeldung |
 |---|---|---|
 | `/login` | Anmelden, danach Rücksprung über `?returnUrl=` | nein |
+| `/register` | Konto erstellen, danach direkt angemeldet und Rücksprung über `?returnUrl=` | nein |
 | `/groups` | Meine Tippgruppen | ja |
 | `/join/:code` | Einladungsvorschau und Beitritt | Vorschau nein, Beitritt ja |
 | `/groups/:id/matchday` | Spieltag mit Tippen | ja |
