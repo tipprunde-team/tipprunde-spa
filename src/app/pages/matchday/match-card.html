@@ -1,0 +1,54 @@
+<article class="card match-card" [class.match-card--done]="!editable()" [attr.aria-label]="match().homeTeam.name + ' gegen ' + match().awayTeam.name">
+  <div class="top">
+    <span class="time">{{ time() }}</span>
+    <span class="badge" [class]="badge().cls">{{ badge().text }}</span>
+  </div>
+
+  @let homeTeam = match().homeTeam;
+  @let awayTeam = match().awayTeam;
+  <div class="teams">
+    <div class="team" [title]="homeTeam.name">
+      <span class="crest">
+        @if (homeTeam.crest && !brokenCrests().has(homeTeam.name)) {
+          <img [src]="homeTeam.crest" [alt]="'Wappen ' + homeTeam.name" width="24" height="24" loading="lazy" (error)="crestFailed(homeTeam)" />
+        } @else {
+          {{ abbr(homeTeam) }}
+        }
+      </span>
+      <span class="team-name">{{ homeTeam.shortName || homeTeam.name }}</span>
+    </div>
+    <span class="score">{{ scoreText(match().result) }}</span>
+    <div class="team team--away" [title]="awayTeam.name">
+      <span class="team-name">{{ awayTeam.shortName || awayTeam.name }}</span>
+      <span class="crest">
+        @if (awayTeam.crest && !brokenCrests().has(awayTeam.name)) {
+          <img [src]="awayTeam.crest" [alt]="'Wappen ' + awayTeam.name" width="24" height="24" loading="lazy" (error)="crestFailed(awayTeam)" />
+        } @else {
+          {{ abbr(awayTeam) }}
+        }
+      </span>
+    </div>
+  </div>
+
+  @if (editable()) {
+    <form class="tip-form" (ngSubmit)="save()">
+      <span class="label">Dein Tipp</span>
+      <div class="tip-inputs">
+        <input class="input" type="number" inputmode="numeric" min="0" max="20" step="1" name="home"
+          [ngModel]="home()" (ngModelChange)="home.set($event)" [attr.aria-label]="'Tore ' + match().homeTeam.name" />
+        <span>:</span>
+        <input class="input" type="number" inputmode="numeric" min="0" max="20" step="1" name="away"
+          [ngModel]="away()" (ngModelChange)="away.set($event)" [attr.aria-label]="'Tore ' + match().awayTeam.name" />
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" [disabled]="saving()">
+        {{ saving() ? 'Wird gespeichert …' : 'Tipp speichern' }}
+      </button>
+    </form>
+  } @else if (savedTip()) {
+    <p class="my-tip">Dein Tipp: <strong>{{ scoreText(savedTip()) }}</strong></p>
+  }
+
+  @if (message(); as msg) {
+    <p class="msg" [class.msg-ok]="msg.ok" role="status">{{ msg.text }}</p>
+  }
+</article>
