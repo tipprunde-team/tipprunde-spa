@@ -1,13 +1,13 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment';
+import { Router, RouterLink } from '@angular/router';
 import { ApiError, messageFor } from '../../core/api-error';
 import { AuthService } from '../../core/auth.service';
 import { GraphqlService } from '../../core/graphql.service';
 import { TokenAnswer } from '../../core/models';
 
-const LOGIN = `
+// Auch für die Anmeldung direkt nach der Registrierung
+export const LOGIN_MUTATION = `
   mutation Login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       token
@@ -18,7 +18,7 @@ const LOGIN = `
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './login.html',
 })
 export class LoginPage {
@@ -29,7 +29,11 @@ export class LoginPage {
   // Rücksprung nach dem Login, z. B. zur Einladung (?returnUrl=/join/abc)
   readonly returnUrl = input<string>();
 
-  protected readonly registerUrl = environment.mpaUrl + '/public/html/auth/Register.html';
+  // Rücksprung auch an die Registrierung weitergeben
+  protected readonly registerParams = computed(() => {
+    const url = this.returnUrl();
+    return url?.startsWith('/') ? { returnUrl: url } : {};
+  });
   protected readonly loading = signal(false);
   protected readonly error = signal<string | null>(null);
 
@@ -48,7 +52,7 @@ export class LoginPage {
     this.error.set(null);
     const { email, password } = this.form.getRawValue();
 
-    this.graphql.request<{ login: TokenAnswer }>(LOGIN, { email: email.trim().toLowerCase(), password }).subscribe({
+    this.graphql.request<{ login: TokenAnswer }>(LOGIN_MUTATION, { email: email.trim().toLowerCase(), password }).subscribe({
       next: ({ login }) => {
         this.auth.saveSession(login);
         // Nur Pfade innerhalb der App zulassen, keine fremden Adressen

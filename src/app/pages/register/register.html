@@ -1,0 +1,55 @@
+<section class="card card-narrow">
+  <h1>Konto erstellen</h1>
+
+  @if (error()) {
+    <div class="alert" role="alert">{{ error() }}</div>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <div class="form-group">
+      <label class="label" for="email">E-Mail</label>
+      <input id="email" class="input" type="email" formControlName="email" autocomplete="email" />
+    </div>
+    <div class="form-group">
+      <label class="label" for="username">Benutzername</label>
+      <input
+        id="username"
+        class="input"
+        type="text"
+        formControlName="username"
+        autocomplete="username"
+        aria-describedby="username-help"
+      />
+      <small id="username-help" class="muted">3 bis 30 Zeichen: Buchstaben, Ziffern, _ . -</small>
+    </div>
+    <div class="form-group">
+      <label class="label" for="password">Passwort</label>
+      <input
+        id="password"
+        class="input"
+        type="password"
+        formControlName="password"
+        autocomplete="new-password"
+        aria-describedby="password-help"
+      />
+      <small id="password-help" class="muted">8 bis 72 Zeichen</small>
+    </div>
+    <div class="form-group">
+      <label class="label" for="password2">Passwort wiederholen</label>
+      <input
+        id="password2"
+        class="input"
+        type="password"
+        formControlName="password2"
+        autocomplete="new-password"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary btn-block" [disabled]="loading()">
+      {{ loading() ? 'Konto wird erstellt …' : 'Konto erstellen' }}
+    </button>
+  </form>
+
+  <p class="muted hint">
+    Schon ein Konto? <a routerLink="/login" [queryParams]="loginParams()">Anmelden</a>
+  </p>
+</section>

@@ -13,6 +13,8 @@ const MESSAGES: Record<string, string> = {
   UNAUTHORIZED: 'Bitte melde dich an.',
   LOGIN_FAILED: 'E-Mail oder Passwort ist falsch.',
   VALIDATION_ERROR: 'Bitte prüfe deine Eingaben.',
+  EMAIL_TAKEN: 'Diese E-Mail-Adresse ist schon registriert.',
+  USERNAME_TAKEN: 'Dieser Benutzername ist schon vergeben.',
   NOT_A_MEMBER: 'Du bist kein Mitglied dieser Tippgruppe.',
   GROUP_NOT_FOUND: 'Diese Tippgruppe gibt es nicht.',
   INVITE_INVALID: 'Der Einladungscode ist ungültig.',
