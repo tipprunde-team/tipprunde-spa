@@ -1,0 +1,26 @@
+# Build der SPA bei jedem Pull Request und jedem Push auf main
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    # Job-Name CI, damit er im Branch-Schutz als Status-Check eingetragen werden kann
+    name: CI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      - name: Produktions-Build
+        run: npm run build

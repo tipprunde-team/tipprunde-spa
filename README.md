@@ -1,59 +1,77 @@
-# TipprundeSpa
+# tipprunde-spa
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.5.
+Single-Page-App der Tipprunde (Fußball-Tippseite) mit Angular. Zweiter Touchpoint neben der MPA (`tipprunde-web`).
+Die SPA spricht ausschließlich mit dem GraphQL-Service (`tipprunde-graphql`), der Vertrag steht dort in
+`src/main/resources/graphql/schema.graphqls`.
 
-## Development server
+## Ansichten
 
-To start a local development server, run:
+| Route | Ansicht | Anmeldung |
+|---|---|---|
+| `/login` | Anmelden, danach Rücksprung über `?returnUrl=` | nein |
+| `/register` | Konto erstellen, danach direkt angemeldet und Rücksprung über `?returnUrl=` | nein |
+| `/groups` | Meine Tippgruppen | ja |
+| `/join/:code` | Einladungsvorschau und Beitritt | Vorschau nein, Beitritt ja |
+| `/groups/:id/matchday` | Spieltag mit Tippen | ja |
+| `/groups/:id/ranking` | Rangliste | ja |
+| `/groups/:id/info` | Gruppe mit Mitgliedern und Einladungslink | ja |
 
-```bash
-ng serve
+Alle Ansichten werden erst beim Aufruf geladen; beim Wechsel lädt die Seite nie neu.
+
+## Aufbau
+
+```
+src/
+  environments/          GraphQL-URL lokal (environment.development.ts) und live (environment.ts)
+  app/
+    core/                GraphqlService, AuthService (sessionStorage), Interceptor, Guard, Typen, Fehlermeldungen
+    pages/               eine Standalone-Komponente pro Ansicht
+    app.routes.ts        alle Routen
+  styles.css             Design-Tokens wie in der MPA
+public/                  Logo, Favicon, Schriften (lokal, ohne Google Fonts)
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Lokal starten (Windows)
 
-## Code scaffolding
+Voraussetzung: Node.js 24 (LTS). Core-Service (Port 8080) und GraphQL-Service (Port 8081) laufen lokal.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```
+npm install
+npx ng serve
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Danach http://localhost:4200 öffnen. Die SPA nutzt lokal automatisch `http://localhost:8081/graphql`.
 
-```bash
-ng generate --help
+### Wie live testen
+
+```
+npm run build
+node server.js
 ```
 
-## Building
+Danach http://localhost:4000 öffnen. `server.js` liefert den Produktions-Build aus, genau wie auf Heroku
+(dabei gilt die Live-GraphQL-URL aus `environment.ts`).
 
-To build the project run:
+## Deployment (Heroku)
 
-```bash
-ng build
-```
+| Datei | Zweck |
+|---|---|
+| `server.js` | Express liefert `dist/tipprunde-spa/browser` aus; unbekannte Pfade bekommen `index.html`, damit Links wie `/join/ABC123` direkt funktionieren |
+| `Procfile` | `web: node server.js` |
+| `package.json` | `engines` legt Node 24 fest, `express` steht unter `dependencies` |
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Heroku installiert die Pakete, führt `npm run build` aus und startet danach das Procfile. Automatic Deploys von `main`
+mit „Wait for CI to pass“, wie beim Core-Service. Die Live-URL des GraphQL-Service steht in
+`src/environments/environment.ts`; der GraphQL-Service muss die SPA-URL in seinen erlaubten CORS-Origins haben.
 
-## Running unit tests
+## Anmeldung
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Nach dem Login speichert der `AuthService` Token, Ablaufzeit, Benutzer-ID und Benutzername im `sessionStorage` des Tabs.
+Der Interceptor hängt das Token als `Authorization: Bearer …` an jede Anfrage. Antwortet der Service mit `UNAUTHORIZED`,
+wird die Sitzung gelöscht und die Ansicht leitet zum Login.
 
-```bash
-ng test
-```
+## Arbeitsweise
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Eigener Branch pro Aufgabe, Änderungen nur über Pull Requests mit Review.
+- Commit-Messages auf Deutsch im Format `feat(bereich): kurze Beschreibung`.
+- Keine Zugangsdaten im Repo.
