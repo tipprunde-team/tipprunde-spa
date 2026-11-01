@@ -70,3 +70,20 @@
     display: none;
   }
 }
+
+/* Touch-Flächen mind. 44 px wie in der MPA (Logo und Links in der Fußzeile) */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.footer-row {
+  align-items: center;
+}
+
+.footer-row a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
