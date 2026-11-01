@@ -14,6 +14,12 @@
       <button type="button" class="btn btn-primary btn-block hint" [disabled]="joining()" (click)="join()">
         {{ joining() ? 'Wird beigetreten …' : auth.isLoggedIn() ? 'Beitreten' : 'Anmelden und beitreten' }}
       </button>
+      @if (!auth.isLoggedIn()) {
+        <p class="muted hint">
+          Noch kein Konto?
+          <a routerLink="/register" [queryParams]="{ returnUrl: '/join/' + code() }">Konto erstellen</a>
+        </p>
+      }
     } @else {
       <p class="hint"><a routerLink="/groups">Zu meinen Tippgruppen</a></p>
     }
