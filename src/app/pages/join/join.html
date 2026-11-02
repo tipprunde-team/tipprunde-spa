@@ -1,0 +1,21 @@
+<section class="card card-narrow">
+  <h1>Tippgruppe beitreten</h1>
+
+  @if (loading()) {
+    <p class="muted">Einladung wird geprüft …</p>
+  } @else {
+    @if (error()) {
+      <div class="alert" role="alert">{{ error() }}</div>
+    }
+    @if (preview(); as group) {
+      <p class="muted">Du wurdest eingeladen in die Tippgruppe</p>
+      <h2>{{ group.groupName }}</h2>
+      <p class="muted">{{ group.memberCount }} {{ group.memberCount === 1 ? 'Mitglied' : 'Mitglieder' }}</p>
+      <button type="button" class="btn btn-primary btn-block hint" [disabled]="joining()" (click)="join()">
+        {{ joining() ? 'Wird beigetreten …' : auth.isLoggedIn() ? 'Beitreten' : 'Anmelden und beitreten' }}
+      </button>
+    } @else {
+      <p class="hint"><a routerLink="/groups">Zu meinen Tippgruppen</a></p>
+    }
+  }
+</section>

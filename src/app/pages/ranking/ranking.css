@@ -1,0 +1,37 @@
+/* Tabelle scrollt nur in ihrer Karte, nie die ganze Seite */
+.ranking-wrap {
+  overflow-x: auto;
+  padding: var(--space-2);
+}
+
+.ranking {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: var(--space-3) var(--space-2);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+th {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.num {
+  text-align: right;
+}
+
+.name {
+  overflow-wrap: anywhere;
+}
+
+/* Eigene Zeile hervorheben */
+tr.me td {
+  background: rgba(242, 107, 53, 0.15);
+  font-weight: 600;
+}

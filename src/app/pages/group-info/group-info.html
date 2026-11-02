@@ -1,0 +1,39 @@
+<app-group-tabs [groupId]="id()" />
+
+@if (loading()) {
+  <p class="muted">Gruppe wird geladen …</p>
+} @else if (error()) {
+  <div class="alert" role="alert">{{ error() }}</div>
+} @else if (group(); as g) {
+  <h1>{{ g.name }}</h1>
+
+  @if (inviteLink(); as link) {
+    <section class="card">
+      <h2>Mitglieder einladen</h2>
+      <p class="muted">Teile den Link, damit andere deiner Tippgruppe beitreten können.</p>
+      <label class="label" for="invite-link">Einladungslink</label>
+      <div class="invite">
+        <input id="invite-link" class="input" type="text" readonly [value]="link" (focus)="$any($event.target).select()" />
+        @if (canShare) {
+          <button type="button" class="btn btn-primary" (click)="share(link)">Teilen</button>
+        }
+        <button type="button" class="btn" [class.btn-primary]="!canShare" [class.btn-secondary]="canShare" (click)="copy(link)">Kopieren</button>
+      </div>
+      @if (status()) {
+        <p class="muted hint" role="status">{{ status() }}</p>
+      }
+    </section>
+  }
+
+  <section class="card">
+    <h2>Mitglieder ({{ g.members?.length ?? 0 }})</h2>
+    <ul class="members">
+      @for (member of g.members ?? []; track member.userId) {
+        <li [class.me]="member.userId === auth.userId()">
+          <span class="name">{{ member.username }}</span>
+          <span class="muted">{{ member.role === 'ADMIN' ? 'Admin' : 'Mitglied' }} · seit {{ joinedAt(member.joinedAt) }}</span>
+        </li>
+      }
+    </ul>
+  </section>
+}

@@ -1,0 +1,29 @@
+<app-group-tabs [groupId]="id()" />
+
+<div class="matchday-nav">
+  <button type="button" class="btn btn-secondary btn-small" aria-label="Vorheriger Spieltag"
+    [disabled]="loading() || (data()?.matchday ?? 1) <= 1" (click)="go(-1)">‹</button>
+  <h1>{{ data()?.matchday ?? '–' }}. Spieltag</h1>
+  <button type="button" class="btn btn-secondary btn-small" aria-label="Nächster Spieltag"
+    [disabled]="loading() || (data()?.matchday ?? 34) >= 34" (click)="go(1)">›</button>
+</div>
+
+@if (error()) {
+  <div class="alert" role="alert">{{ error() }}</div>
+}
+
+@if (loading() && !data()) {
+  <p class="muted">Spieltag wird geladen …</p>
+} @else if (data(); as matchday) {
+  @if (matchday.matches.length === 0) {
+    <section class="card"><p class="muted">Für diesen Spieltag sind noch keine Spiele eingetragen.</p></section>
+  }
+  @for (day of days(); track day.label) {
+    <h2 class="day">{{ day.label }}</h2>
+    <div class="match-list">
+      @for (match of day.matches; track match.id) {
+        <app-match-card [match]="match" [groupId]="id()" [serverNow]="serverNow()" (reloadRequested)="reload()" />
+      }
+    </div>
+  }
+}
