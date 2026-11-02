@@ -20,6 +20,6 @@
   </form>
 
   <p class="muted hint">
-    Noch kein Konto? <a [href]="registerUrl">Konto erstellen</a>
+    Noch kein Konto? <a routerLink="/register" [queryParams]="registerParams()">Konto erstellen</a>
   </p>
 </section>

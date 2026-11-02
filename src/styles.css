@@ -270,3 +270,10 @@ a {
 .input:focus {
   border-color: var(--color-accent);
 }
+
+/* Textlinks in Hinweisen (Konto erstellen, Anmelden) mit 44 px Touch-Fläche */
+.hint a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}

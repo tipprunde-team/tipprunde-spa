@@ -10,6 +10,12 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/login/login').then((m) => m.LoginPage),
   },
   {
+    // Registrierung wie in der MPA, danach direkt angemeldet
+    path: 'register',
+    title: 'Konto erstellen – Tipprunde',
+    loadComponent: () => import('./pages/register/register').then((m) => m.RegisterPage),
+  },
+  {
     path: 'groups',
     title: 'Meine Tippgruppen – Tipprunde',
     canActivate: [authGuard],
