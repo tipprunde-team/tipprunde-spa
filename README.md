@@ -4,6 +4,15 @@ Single-Page-App der Tipprunde (Fußball-Tippseite) mit Angular. Zweiter Touchpoi
 Die SPA spricht ausschließlich mit dem GraphQL-Service (`tipprunde-graphql`), der Vertrag steht dort in
 `src/main/resources/graphql/schema.graphqls`.
 
+## Live-Version
+
+| Was | Adresse |
+|---|---|
+| SPA (Heroku) | https://tipprunde-spa-e05a9da66be7.herokuapp.com |
+| GraphQL-Service (Heroku) | https://tipprunde-graphql-1d89bddb9da1.herokuapp.com/graphql |
+
+Beide Dienste laufen auf Eco-Dynos und schlafen nach 30 Minuten ohne Aufruf ein; der erste Aufruf danach dauert einige Sekunden.
+
 ## Ansichten
 
 | Route | Ansicht | Anmeldung |
