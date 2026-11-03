@@ -256,6 +256,7 @@ a {
   margin-top: var(--space-4);
 }
 
+/* KI-Log MG-65 "SPA an Styleguide angleichen." */
 /* Abgleich mit dem Styleguide der MPA (F-MG-4): Eingabefelder dunkel wie in style.css */
 .input {
   color: var(--color-text);
@@ -271,6 +272,7 @@ a {
   border-color: var(--color-accent);
 }
 
+/* KI-Log MG-65 "SPA an Styleguide angleichen." */
 /* Textlinks in Hinweisen (Konto erstellen, Anmelden) mit 44 px Touch-Fläche */
 .hint a {
   display: inline-flex;

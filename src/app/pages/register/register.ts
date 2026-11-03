@@ -1,3 +1,4 @@
+// KI-Log MG-65 "SPA an Styleguide angleichen."
 import { Component, computed, inject, input, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';

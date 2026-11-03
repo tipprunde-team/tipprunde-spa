@@ -10,6 +10,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/login/login').then((m) => m.LoginPage),
   },
   {
+    // KI-Log MG-65 "SPA an Styleguide angleichen."
     // Registrierung wie in der MPA, danach direkt angemeldet
     path: 'register',
     title: 'Konto erstellen – Tipprunde',
