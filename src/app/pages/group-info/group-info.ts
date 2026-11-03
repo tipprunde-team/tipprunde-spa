@@ -1,3 +1,4 @@
+// KI-Log NS-28 "Gruppenabläufe der MPA in Angular umsetzen."
 import { Component, computed, effect, inject, input, signal, untracked } from '@angular/core';
 import { ApiError } from '../../core/api-error';
 import { AuthService } from '../../core/auth.service';

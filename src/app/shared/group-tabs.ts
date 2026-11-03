@@ -1,3 +1,4 @@
+// KI-Log NS-28 "Gruppenabläufe der MPA in Angular umsetzen."
 import { Component, input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 

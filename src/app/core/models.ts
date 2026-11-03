@@ -1,3 +1,4 @@
+// KI-Log NS-27 "GraphQL mit Token im Header, geschützte Routen."
 // Typen passend zu schema.graphqls im Repo tipprunde-graphql
 
 export interface User {

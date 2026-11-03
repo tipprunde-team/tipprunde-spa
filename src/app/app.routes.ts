@@ -1,3 +1,4 @@
+// KI-Log NS-26 "Angular-Gerüst im Tipprunde-Design mit CI."
 import { Routes } from '@angular/router';
 import { authGuard } from './core/auth.guard';
 

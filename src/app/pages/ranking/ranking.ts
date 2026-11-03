@@ -1,3 +1,4 @@
+// KI-Log NS-30 "Rangliste mit Rangregel 1, 2, 2, 4."
 import { Component, effect, inject, input, signal, untracked } from '@angular/core';
 import { ApiError } from '../../core/api-error';
 import { AuthService } from '../../core/auth.service';

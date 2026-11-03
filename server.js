@@ -1,3 +1,4 @@
+// KI-Log NS-31 "SPA auf Heroku, Einladungslinks direkt aufrufbar."
 // Liefert den fertigen Angular-Build aus (Heroku startet diese Datei über das Procfile)
 const express = require('express');
 const path = require('node:path');
