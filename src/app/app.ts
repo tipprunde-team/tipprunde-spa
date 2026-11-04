@@ -1,3 +1,4 @@
+// KI-Log NS-26 "Angular-Gerüst im Tipprunde-Design mit CI."
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { environment } from '../environments/environment';

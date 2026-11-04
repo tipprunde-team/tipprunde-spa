@@ -1,3 +1,4 @@
+# KI-Log NS-26 "Angular-Gerüst im Tipprunde-Design mit CI."
 # Build der SPA bei jedem Pull Request und jedem Push auf main
 name: CI
 

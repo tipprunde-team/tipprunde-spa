@@ -1,3 +1,4 @@
+/* KI-Log NS-29 "Sperre nach Serverzeit, nie nach Geräteuhr." */
 .match-card {
   display: grid;
   gap: var(--space-3);

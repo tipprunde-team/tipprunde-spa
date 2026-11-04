@@ -1,3 +1,4 @@
+// KI-Log NS-27 "GraphQL mit Token im Header, geschützte Routen."
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AuthService } from './auth.service';

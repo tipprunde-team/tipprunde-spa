@@ -1,3 +1,4 @@
+// KI-Log NS-29 "Sperre nach Serverzeit, nie nach Geräteuhr."
 import { Component, DestroyRef, computed, effect, inject, input, signal, untracked } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiError } from '../../core/api-error';

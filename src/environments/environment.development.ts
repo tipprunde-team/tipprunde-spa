@@ -1,3 +1,4 @@
+// KI-Log NS-27 "GraphQL mit Token im Header, geschützte Routen."
 // Lokale Entwicklung: GraphQL-Service läuft mit gradlew.bat bootRun auf Port 8081
 export const environment = {
   production: false,

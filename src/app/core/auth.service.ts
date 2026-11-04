@@ -1,3 +1,4 @@
+// KI-Log NS-27 "GraphQL mit Token im Header, geschützte Routen."
 import { Injectable, computed, signal } from '@angular/core';
 import { TokenAnswer } from './models';
 

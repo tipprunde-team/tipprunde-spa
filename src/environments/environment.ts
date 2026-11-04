@@ -1,3 +1,4 @@
+// KI-Log NS-27 "GraphQL mit Token im Header, geschützte Routen."
 // Live-Umgebung: GraphQL-Service auf Heroku (URL wird beim Deployment eingetragen)
 export const environment = {
   production: true,

@@ -1,3 +1,4 @@
+// KI-Log NS-27 "GraphQL mit Token im Header, geschützte Routen."
 // Einheitlicher Fehler für die Oberfläche: Code aus extensions.code, Text auf Deutsch
 export class ApiError extends Error {
   constructor(
